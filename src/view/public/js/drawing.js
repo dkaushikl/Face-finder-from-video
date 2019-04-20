@@ -4,9 +4,6 @@ function resizeCanvasAndResults(dimensions, canvas, results) {
     : dimensions
   canvas.width = width
   canvas.height = height
-
-  // resize detections (and landmarks) in case displayed image is smaller than
-  // original size
   return faceapi.resizeResults(results, { width, height })
 }
 
@@ -29,14 +26,4 @@ function drawLandmarks(dimensions, canvas, results, withBoxes = true) {
     color: 'green'
   }
   faceapi.drawLandmarks(canvas, faceLandmarks, drawLandmarksOptions)
-}
-
-function drawExpressions(dimensions, canvas, results, thresh, withBoxes = true) {
-  const resizedResults = resizeCanvasAndResults(dimensions, canvas, results)
-
-  if (withBoxes) {
-    faceapi.drawDetection(canvas, resizedResults.map(det => det.detection), { withScore: false })
-  }
-
-  faceapi.drawFaceExpressions(canvas, resizedResults.map(({ detection, expressions }) => ({ position: detection.box, expressions })))
 }

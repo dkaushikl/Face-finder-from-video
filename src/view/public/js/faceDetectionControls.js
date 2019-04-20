@@ -5,36 +5,12 @@ const MTCNN = 'mtcnn'
 
 let selectedFaceDetector = SSD_MOBILENETV1
 
-// ssd_mobilenetv1 options
-let minConfidence = 0.5
-
-// tiny_face_detector options
 let inputSize = 512
 let scoreThreshold = 0.5
 
-//mtcnn options
-let minFaceSize = 20
-
 function getFaceDetectorOptions() {
-  return selectedFaceDetector === SSD_MOBILENETV1
-    ? new faceapi.SsdMobilenetv1Options({ minConfidence })
-    : (
-      selectedFaceDetector === TINY_FACE_DETECTOR
-        ? new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
-        : new faceapi.MtcnnOptions({ minFaceSize })
-    )
-}
-
-function onIncreaseMinConfidence() {
-  minConfidence = Math.min(faceapi.round(minConfidence + 0.1), 1.0)
-  $('#minConfidence').val(minConfidence)
-  updateResults()
-}
-
-function onDecreaseMinConfidence() {
-  minConfidence = Math.max(faceapi.round(minConfidence - 0.1), 0.1)
-  $('#minConfidence').val(minConfidence)
-  updateResults()
+  return selectedFaceDetector === SSD_MOBILENETV1 ? new faceapi.SsdMobilenetv1Options({ minConfidence })
+    : (selectedFaceDetector === TINY_FACE_DETECTOR ? new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold }) : new faceapi.MtcnnOptions({ minFaceSize }))
 }
 
 function onInputSizeChanged(e) {
@@ -48,28 +24,6 @@ function changeInputSize(size) {
   const inputSizeSelect = $('#inputSize')
   inputSizeSelect.val(inputSize)
   inputSizeSelect.material_select()
-}
-
-function onIncreaseScoreThreshold() {
-  scoreThreshold = Math.min(faceapi.round(scoreThreshold + 0.1), 1.0)
-  $('#scoreThreshold').val(scoreThreshold)
-  updateResults()
-}
-
-function onDecreaseScoreThreshold() {
-  scoreThreshold = Math.max(faceapi.round(scoreThreshold - 0.1), 0.1)
-  $('#scoreThreshold').val(scoreThreshold)
-  updateResults()
-}
-
-function onIncreaseMinFaceSize() {
-  minFaceSize = Math.min(faceapi.round(minFaceSize + 20), 300)
-  $('#minFaceSize').val(minFaceSize)
-}
-
-function onDecreaseMinFaceSize() {
-  minFaceSize = Math.max(faceapi.round(minFaceSize - 20), 50)
-  $('#minFaceSize').val(minFaceSize)
 }
 
 function getCurrentFaceDetectionNet() {
