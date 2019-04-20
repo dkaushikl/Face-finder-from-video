@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "justadudewhohacks",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
